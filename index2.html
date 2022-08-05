@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-witdth, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <title>Game | Blue Bear development website</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" 
+        integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
+        <link rel="stylesheet" href="style2.css">
+    </head>
+    <body>
+        <header>
+            <a href="indexdev.html" class="logo">development<Logo/a>
+            <ul class="navigation">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#" class="active">Game</a></li>
+                <li><a href="index3.html">Download</a></li>
+                <li><a href="index4.html">About</a></li>
+            </ul>
+            <div class="search">
+                <input type="text" placeholder="Search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </div>
+        </header>
+        <div class="banner">
+            <img src="bg.png" class="bg">
+            <div class="content">
+                <img src="name.png" class="movieTitle">
+                <h4>
+                    <span>August 2022</span>
+                    <span>7+</span>
+                    <span>Indefinite time</span>
+                    <span>Action</span>
+                    <span>2D</span>
+                </h4>
+                <p>
+                    Hacker game is a 2D game coded in Python3.10 using the "pygame" and "random" imports. The player embodies a hacker who can move laterally and can shoot projectiles to eliminate monsters. The monsters, of random speeds, inflict damage to the player on contact. Eliminating a monster adds 10 points to your score. Meteors of different speeds fall from the sky randomly, and kill the player if they come in contact with him. The goal of the game is to survive as long as possible in order to get the highest score possible. Beware the danger can come from all sides! Since many factors are random, no two games are the same! <br> Controls:
+                    click to throw / space to shoot / side arrows to move 
+                </p>
+                <div class="buttons">
+                    <a href="indexcode.html">Code</a>
+                    <a href="indexnews.html">News</a>
+                </div>
+            </div>
+            <a class="play" onclick="toggleVideo();"><img src="play.png">Watch Trailer</a>
+        </div>
+        <div class="trailer">
+            <video src="trailer.mp4" controls="true"></video>
+            <img src="close.png" class="close" onclick="toggleVideo();">
+        </div>
+        <script>
+            function toggleVideo(){
+                const trailer = document.querySelector('.trailer');
+                const video = document.querySelector('video');
+                trailer.classList.toggle('active')
+                video.currentTime = 0;
+                video.pause();
+            }
+        </script>
+    </body>
+</html>
+
+<!--Code of Blue Bear-->

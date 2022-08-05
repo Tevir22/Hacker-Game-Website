@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Code | Blue Bear development website</title>
+        <link rel="stylesheet" type="text/css" href="styledc.css">
+    </head>
+    <body>
+        <header>
+            <a href="indexdev.html" class="logo">development<Logo/a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index2.html">Game</a></li>
+                <li><a href="index3.html">Download</a></li>
+                <li><a href="index4.html">About</a></li>
+            </ul>
+            <div class="search">
+                <input type="text" placeholder="Search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </div>
+        </header>
+        <section>
+            <img src="2.png" id="mountains_front">
+        </section>
+        <div class="sec" id="sec">
+            <h2>main.py</h2>
+            <p><br><br>import pygame
+                <br>import math
+                <br>from game import Game
+                
+                <br><br>pygame.init()
+                
+                <br><br># definir une clock
+                <br>clock = pygame.time.Clock()
+                <br>FPS = 300
+                
+                <br><br># generer la fenetre du jeu
+                <br>pygame.display.set_caption("HACKER GAME by Blue Bear")
+                <br>screen = pygame.display.set_mode((1080, 720))
+                
+                <br><br># importer et charger l'arriere plan du jeu
+                <br>background = pygame.image.load('assets2/background2.png')
+                
+                <br><br># importer le bannière
+                <br>banner = pygame.image.load('assets2/banner2 (2).png')
+                <br>banner = pygame.transform.scale(banner, (500, 575))
+                <br>banner_rect = banner.get_rect()
+                <br>banner_rect.x = math.ceil(screen.get_width() / 4)
+                <br>banner_rect.y = math.ceil(screen.get_height() / 200)
+                
+                <br><br># importer le bouton pour lancer la partie
+                <br>play_button = pygame.image.load('assets2/banner2 (2).png')
+                <br>play_button = pygame.transform.scale(play_button, (400, 150))
+                <br>play_button_rect = play_button.get_rect()
+                <br>play_button_rect.x = math.ceil(screen.get_width() / 3.33)
+                <br>play_button_rect.y = math.ceil(screen.get_height() / 1.9)
+                
+                <br><br># charger le jeu
+                <br>game = Game()
+                <br>running = True
+                
+                <br><br># boucle tant que cette condition est vraie
+                <br>while running:
+                
+                <br><br>----# appliquer l'arriere plan du jeu
+                <br>----screen.blit(background, (0, 0))
+                
+                <br><br>----# verifier si le jeu a commencé ou non
+                <br>----if game.is_playing:
+                <br>--------# déclencher les instructions de la partie
+                <br>--------game.update(screen)
+                <br>----# verifier si notre jeu n'a pas commencé
+                <br>----else:
+                <br>--------# ajouter mon écran de bienvenue
+                <br>--------screen.blit(play_button, play_button_rect)
+                <br>--------screen.blit(banner, banner_rect)
+                
+                <br><br>----# mettre à jour l'ecran
+                <br>----pygame.display.flip()
+                
+                <br><br>----# si le player ferme cette fenetre
+                <br>----for event in pygame.event.get():
+                <br>--------# que l'evenement est fermeture de fenetre
+                <br>--------if event.type == pygame.QUIT:
+                <br>------------running = False
+                <br>------------pygame.quit()
+                <br>------------print("Fermeture du jeu")
+                <br>--------# detecter si un player lache une touche du clavier
+                <br>--------elif event.type == pygame.KEYDOWN:
+                <br>------------game.pressed[event.key] = True
+                
+                <br><br>------------# detecter si la touche espace est enclenchée pour lancer le projectile
+                <br>------------if event.key == pygame.K_SPACE:
+                <br>----------------game.player.launch_projectile()
+                
+                <br><br>--------elif event.type == pygame.KEYUP:
+                <br>------------game.pressed[event.key] = False
+                
+                <br><br>--------elif event.type == pygame.MOUSEBUTTONDOWN:
+                <br>------------# verification pour savoir si la souris est en collision avec le bouton jouer
+                <br>------------if play_button_rect.collidepoint(event.pos):
+                <br>----------------# mettre le jeu en mode "lancé"
+                <br>----------------game.start()
+                <br>----------------# jouer le son
+                <br>----------------game.sound_manager.play('click')
+                
+                <br><br>----# fixer le nombre de fps sur la clock
+                <br>----clock.tick(FPS)<br><br><br><br></p>
+
+            <h2>game.py</h2>
+            <p><br><br>import pygame
+                <br>from player import Player
+                <br>from monster import Monster
+                <br>from comet_event import CometFallEvent
+                
+                <br><br># classe qui va representer le jeu
+                <br>from sounds import SoundManager
+                
+                <br><br>class Game:
+                
+                <br><br>----def __init__(self):
+                <br>--------# definir si notre jeu a commencé ou non
+                <br>--------self.is_playing = False
+                <br>--------# generer le player
+                <br>--------self.all_players = pygame.sprite.Group()
+                <br>--------self.player = Player(self)
+                <br>--------self.all_players.add(self.player)
+                <br>--------# generer l'evenement
+                <br>--------self.comet_event = CometFallEvent(self)
+                <br>--------# groupe de monstre
+                <br>--------self.all_monsters = pygame.sprite.Group()
+                <br>--------# gerer le son
+                <br>--------self.sound_manager = SoundManager()
+                <br>--------# mettre le score à 0
+                <br>--------self.font = pygame.font.Font("assets/my_custom_font.ttf", 60)
+                <br>--------self.score = 0
+                <br>--------self.pressed = {}
+                
+                <br><br>----def start(self):
+                <br>--------self.is_playing = True
+                <br>--------self.spawn_monster()
+                <br>--------self.spawn_monster()
+                
+                <br><br>----def game_over(self):
+                <br>--------# remettre le jeu à neuf, retirer les monstres et remttre le joueur à 100 pdv
+                <br>--------self.all_monsters = pygame.sprite.Group()
+                <br>--------self.comet_event.all_comets = pygame.sprite.Group()
+                <br>--------self.player.health = self.player.max_health
+                <br>--------self.comet_event.reset_persent()
+                <br>--------self.is_playing = False
+                <br>--------self.score = 0
+                <br>--------# jouer le son
+                <br>--------self.sound_manager.play('game_over')
+                
+                <br><br>----def update(self, screen):
+                <br>--------# afficher le score sur l'écran
+                <br>--------score_text = self.font.render(f"Score : {self.score}", 1, (193,227,234,255))
+                <br>--------screen.blit(score_text, (20, 20))
+                
+                <br><br>--------# appliquer l'image du player
+                <br>--------screen.blit(self.player.image, self.player.rect)
+                
+                <br><br>--------# actualiser la barre de vie du joueur
+                <br>--------self.player.update_health_bar(screen)
+                
+                <br><br>--------# actualiser la barre d'evenement du jeu
+                <br>--------self.comet_event.update_bar(screen)
+                
+                <br><br>--------# recuperer les projectiles du player
+                <br>--------for projectile in self.player.all_projectiles:
+                <br>------------projectile.move()
+                
+                <br><br>--------# recuperer les monstres du jeu
+                <br>--------for monster in self.all_monsters:
+                <br>------------monster.forward()
+                <br>------------monster.update_health_bar(screen)
+            
+                <br><br>--------# recuperer les cometes du jeu
+                <br>--------for comet in self.comet_event.all_comets:
+                <br>------------comet.fall()
+                <br>------------comet.move()
+                
+                <br><br>--------# appliquer l'ensemble des images de mon groupe de projectiles
+                <br>--------self.player.all_projectiles.draw(screen)
+                
+                <br><br>--------# appliquer l'ensemble des images du groupe de monstre
+                <br>--------self.all_monsters.draw(screen)
+                
+                <br><br>--------# appliquer l'ensemble des images du groupe de cometes
+                <br>--------self.comet_event.all_comets.draw(screen)
+                
+                <br><br>----# verifier si le player souhaite aller à gauche ou à droite
+                <br>--------if self.pressed.get(pygame.K_RIGHT) and self.player.rect.x + self.player.rect.width < screen.get_width():
+                <br>------------self.player.move_right()
+                <br>--------elif self.pressed.get(pygame.K_LEFT) and self.player.rect.x > 0:
+                <br>------------self.player.move_left()
+                
+                <br><br>----def check_collision(self, sprite, group):
+                <br>--------return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
+                
+                <br><br>----def spawn_monster(self):
+                <br>--------monster = Monster(self)
+                <br>--------self.all_monsters.add(monster)<br><br><br><br></p>
+
+            <h2>player.py</h2>
+            <p><br><br>import pygame
+                <br>from projectile import Projectile
+                
+                <br><br># creer une premiere classe qui va representer le player
+                <br>class Player(pygame.sprite.Sprite):
+                
+                <br><br>----def __init__(self, game):
+                <br>--------super().__init__()
+                <br>--------self.game = game
+                <br>--------self.health = 100
+                <br>--------self.max_health = 100
+                <br>--------self.attack = 25
+                <br>--------self.velocity = 6
+                <br>--------self.all_projectiles = pygame.sprite.Group()
+                <br>--------self.image = pygame.image.load('assets2/player2.png')
+                <br>--------self.image = pygame.transform.scale(self.image, (175, 175))
+                <br>--------self.rect = self.image.get_rect()
+                <br>--------self.rect.x = 2
+                <br>--------self.rect.y = 500
+                
+                <br><br>----def damage(self, amound):
+                <br>--------if self.health - amound > amound:
+                <br>------------self.health -= amound
+                <br>--------else:
+                <br>------------# si le joueur n'a plus de pdv
+                <br>------------self.game.game_over()
+                
+                <br><br>----def update_health_bar(self, surface):
+                <br>--------# dessiner la bar de vie
+                <br>--------pygame.draw.rect(surface, (60, 63, 60), [self.rect.x + 35, self.rect.y - 25, self.max_health, 7])
+                <br>--------pygame.draw.rect(surface, (193,227,234,255), [self.rect.x + 35, self.rect.y - 25, self.health, 7])
+                
+                <br><br>----def launch_projectile(self):
+                <br>--------# creer une nouvelle instance de la classe Projectile
+                <br>--------self.all_projectiles.add(Projectile(self))
+                <br>--------# jouer le son
+                <br>--------self.game.sound_manager.play('tir')
+                
+                <br><br>----def move_right(self):
+                <br>--------# si le player n'est pas en collision avec une entité monstre
+                <br>--------if not self.game.check_collision(self, self.game.all_monsters):
+                <br>--------self.rect.x += self.velocity
+                
+                <br><br>----def move_left(self):
+                <br>--------self.rect.x -= self.velocity<br><br><br><br></p>
+
+            <h2>monster.py</h2>
+            <p><br><br>import pygame
+                <br>import random
+                
+                <br><br># creer une classe qui va gérer la notion de monstre sur le jeu
+                <br>class Monster(pygame.sprite.Sprite):
+                
+                <br><br>----def __init__(self, game):
+                <br>--------super().__init__()
+                <br>--------self.game = game
+                <br>--------self.health = 100
+                <br>--------self.max_health = 100
+                <br>--------self.attack = 1
+                <br>--------self.image = pygame.image.load('assets2/monster2-modified (1).png')
+                <br>--------self.image = pygame.transform.scale(self.image, (175, 175))
+                <br>--------self.rect = self.image.get_rect()
+                <br>--------self.rect.x = 1000 + random.randint(0, 300)
+                <br>--------self.rect.y = 510
+                <br>--------self.velocity = random.randint(1, 2)
+                
+                <br><br>----def damage(self, amount):
+                <br>--------# infliger les dégats
+                <br>--------self.health -= amount
+                
+                <br><br>--------# Verifier si son nouveau nombre de pdv et >= 0
+                <br>--------if self.health <= 0:
+                <br>------------# Reapparaitre comme un nouveau monstre
+                <br>------------self.rect.x = 1000 + random.randint(0, 300)
+                <br>------------self.velocity = random.randint(4, 10)
+                <br>------------self.health = self.max_health
+                <br>------------# ajouter le nombre de points
+                <br>------------self.game.score += 10
+                
+                <br><br>----def update_health_bar(self, surface):
+                <br>--------# dessiner la bar de vie
+                <br>--------pygame.draw.rect(surface, (60, 63, 60), [self.rect.x + 45, self.rect.y - 20, self.max_health, 5])
+                <br>--------pygame.draw.rect(surface, (193,227,234,255), [self.rect.x + 45, self.rect.y - 20, self.health, 5])
+                
+                <br><br>----def forward(self):
+                <br>--------# le deplacement ne se fait que s'il n'y a pas de collision avec un groupe de player
+                <br>--------if not self.game.check_collision(self, self.game.all_players):
+                <br>------------self.rect.x -= self.velocity
+                <br>--------# si le monstre est en collision avedc le joueur
+                <br>--------else:
+                <br>------------# infliger des dégats (au joueur)
+                <br>------------self.game.player.damage(self.attack)<br><br><br><br></p>
+
+            <h2>sounds.py</h2>
+            <p><br><br>import pygame
+
+                <br><br>class SoundManager:
+                
+                <br><br>----def __init__(self):
+                <br>--------self.sounds = {
+                <br>------------'click': pygame.mixer.Sound("assets/sounds/click.ogg"),
+                <br>------------'game_over': pygame.mixer.Sound("assets/sounds/game_over.ogg"),
+                <br>------------'meteorite': pygame.mixer.Sound("assets/sounds/meteorite.ogg"),
+                <br>------------'tir': pygame.mixer.Sound("assets/sounds/tir.ogg"),
+                <br>--------}
+                
+                <br>----def play(self, name):
+                <br>--------self.sounds[name].play()<br><br><br><br></p>
+
+            <h2>projectile.py</h2>
+            <p><br><br>import pygame
+
+                <br><br># definir la classe qui va gérer le projectile du player
+                <br>class Projectile(pygame.sprite.Sprite):
+                
+                <br><br>----# definir le constructeur de cette classe
+                <br>----def __init__(self, player):
+                <br>--------super().__init__()
+                <br>--------self.velocity = 7
+                <br>--------self.player = player
+                <br>--------self.image = pygame.image.load("assets2/projectile2.png")
+                <br>--------self.image = pygame.transform.scale(self.image, (50, 50))
+                <br>--------self.rect = self.image.get_rect()
+                <br>--------self.rect.x = player.rect.x + 120
+                <br>--------self.rect.y = player.rect.y + 80
+                <br>--------self.origin_image = self.image
+                <br>--------self.angle = 0
+                
+                <br><br>----def rotate(self):
+                <br>--------# tourner le projectile
+                <br>--------self.angle -= 4
+                <br>--------self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
+                <br>--------self.rect = self.image.get_rect(center=self.rect.center)
+                
+                <br><br>----def remove(self):
+                <br>--------self.player.all_projectiles.remove(self)
+                
+                <br><br>----def move(self):
+                <br>--------self.rect.x += self.velocity
+                <br>--------self.rotate()
+                
+                <br><br>--------# verifier si le projectile rentre en collision avec un monstre
+                <br>--------for monster in self.player.game.check_collision(self, self.player.game.all_monsters):
+                <br>------------# supprimer le projectile
+                <br>------------self.remove()
+                <br>------------# infliger des degats
+                <br>------------monster.damage(self.player.attack)
+                
+                <br><br>--------# verifier si le projectile n'est plus présent sur l'ecran
+                <br>--------if self.rect.x > 1080:
+                <br>------------# supprimer le projectile (en dehors de l'écran)
+                <br>------------self.remove()<br><br><br><br></p>
+
+            <h2>comet.py</h2>
+            <p><br><br>import pygame
+                <br>import random
+                
+                <br><br># creer une classe pour gerer cette comete
+                <br>class Comet(pygame.sprite.Sprite):
+                
+                <br><br>----def __init__(self, comet_event):
+                <br>--------super().__init__()
+                <br>--------# definir l'image associee à cette comete
+                <br>--------self.image = pygame.image.load('assets2/comet2.png')
+                <br>--------self.image = pygame.transform.scale(self.image, (120, 120))
+                <br>--------self.rect = self.image.get_rect()
+                <br>--------self.velocity = random.randint(2, 9)
+                <br>--------self.rect.x = random.randint(20, 800)
+                <br>--------self.rect.y = - random.randint(0, 800)
+                <br>--------self.comet_event = comet_event
+                <br>--------self.origin_image = self.image
+                <br>--------self.angle = 0
+                
+                <br><br>----def rotate(self):
+                <br>--------# tourner le projectile
+                <br>--------self.angle -= 4
+                <br>--------self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
+                <br>--------self.rect = self.image.get_rect(center=self.rect.center)
+                
+                <br><br>----def remove(self):
+                <br>--------self.comet_event.all_comets.remove(self)
+                <br>--------# jouer le son
+                <br>--------self.comet_event.game.sound_manager.play('meteorite')
+                
+                <br><br>----def move(self):
+                <br>--------self.rotate()
+                
+                <br><br>----def fall(self):
+                <br>--------self.rect.y += self.velocity
+                
+                <br><br>--------# ne tombe pas sur le sol
+                <br>--------if self.rect.y >= 500:
+                <br>------------print("Sol")
+                <br>------------# retirer la boule de feu
+                <br>------------self.remove()
+                
+                <br><br>--------# verifier si la boule de feu touche le joueur
+                <br>--------if self.comet_event.game.check_collision(
+                <br>------------self, self.comet_event.game.all_players
+                <br>--------):
+                <br><br>------------print("Joueur touché !")
+                <br>------------# retirer la boule de feu
+                <br>------------self.remove()
+                <br>------------# subir 20 points de degat
+                <br>------------self.comet_event.game.player.damage(100)<br><br><br><br></p>
+
+            <h2>comet_event.py</h2>
+            <p><br><br>import pygame
+                <br>from comet import Comet
+                
+                <br><br># créer une classe pour gérer cet evenement
+                <br>class CometFallEvent:
+                
+                <br><br>----# lors du chargement -> créer un compteur
+                <br>----def __init__(self, game):
+                <br>--------self.percent = 0
+                <br>--------self.percent_speed = 250 * 2
+                <br>--------self.game = game
+                
+                <br><br>--------# definir un groupe de sprite pour stocker les cometes
+                <br>--------self.all_comets = pygame.sprite.Group()
+                
+                <br><br>----def add_percent(self):
+                <br>--------self.percent += self.percent_speed / 500
+                
+                <br><br>----def is_full_loaded(self):
+                <br>--------return self.percent >=100
+                
+                <br><br>----def reset_persent(self):
+                <br>--------self.percent = 0
+                
+                <br><br>----def meteor_fall(self):
+                <br>--------# apparaitre la boule de feu
+                <br>--------self.all_comets.add(Comet(self))
+                
+                <br><br>----def attempt_fall(self):
+                <br>--------# la jauge d'event est totalement chargée
+                <br>--------if self.is_full_loaded():
+                <br>------------print("Pluie de cometes !")
+                <br>------------self.meteor_fall()
+                <br>------------self.reset_persent()
+                
+                <br><br>----def update_bar(self, surface):
+                
+                <br><br>--------# ajouter du pourcentage à la bar
+                <br>--------self.add_percent()
+                
+                <br><br>--------# appel de la méthode pour essayer  de declencher la pluie de comete
+                <br>--------self.attempt_fall()
+                
+                <br><br>--------# barre noire en arrière plan
+                <br>--------pygame.draw.rect(surface, (0, 0, 0), [
+                <br>------------0, # axe des x
+                <br>------------surface.get_height() - 20, # l'axe des y
+                <br>------------surface.get_width(), # longueur de la fenetre
+                <br>------------10 # épaisseur de la barre
+                <br>--------])
+                <br>--------# barre rouge d'event
+                <br>--------pygame.draw.rect(surface, (127,61,83,255), [
+                <br>------------0,  # axe des x
+                <br>------------surface.get_height() - 20,  # l'axe des y
+                <br>------------(surface.get_width() / 100) * self.percent,  # longueur de la fenetre
+                <br>------------10  # épaisseur de la barre
+                <br>--------])<br><br><br><br><br><br></p>
+
+
+            <h2>{-----comments-----}</h2>
+            <p>1/ The "-" represent indentations in Python (4 dashes = one indentation
+                <br>2/ The names of the added folders are mentioned but are available for download only via the download section
+                <br>3/ Variable names are not important and are interchangeable (mine are not necessarily the best)
+                <br>4/ Numerical values can be changed manually if you want to create your own version of my game (adjust parameters like speed, health, damage...
+                <br>5/ For those who don't know Python, the lines with a "#" are not executed, they are comments or explanations
+                <br>6/ Je n'ai pas mis sur cette page le code source de mon site (ce serait trop long et il est moins intéressant), cependant vous pouvez le consulter depuis votre navigateur en appuyant sur la touche "F12" ou en cliquant sur "..." puis "more tools" puis "outils de developpement".</p>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Download | Blue Bear development website</title>
+        <link rel="stylesheet" type="text/css" href="style3.css">
+    </head>
+    <body>
+        <section class="sec">
+            <header>
+                <a href="indexdev.html" class="logo">development<Logo/a>
+                <ul class="navigation">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index2.html">Game</a></li>
+                    <li><a href="#" class="active">Download</a></li>
+                    <li><a href="index4.html">About</a></li>
+                </ul>
+                <div class="search">
+                    <input type="text" placeholder="Search">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </div>
+            </header>
+            <div class="content">
+                <div class="textBox">
+                    <h2>download<br><text>Hacker</text><br><span>Game</span></h2>
+                    <p>My game is downloadable in 3 versions: 1.1, 1.2 & 1.3. Each version has a different difficulty level, as well as different colors (the color of the monsters and meteorites change). The change of color is visible directly on this page by clicking on the monsters at the bottom.
+                        <br><br>1.1 : STANDARD (red) : The monsters are fast but don't do too much damage, the meteorites kill directly
+                        <br><br>1.2 : EASY (green) : The monsters are slower, do not do much damage and the meteorites only take away 25% of the player's life
+                        <br><br>1.3 : HARD (purple) : Monsters are fast and do a lot of damage, meteorites kill directly
+                        <br><br>In version 2.1 of my site, it is planned to add 3 or 4 game modes, which will be teased in the "News" section. The version 3.1 will also be a major update: new designs will appear in the game modes already present.
+                        Finally, version 4.1 will offer Hacker Game 2: a sequel in the same universe but very different...
+                        But it's not for now !</p>
+                    <a href="indexdown.html">Dowload 1.1</a>
+                    <a href="indexdown2.html">Dowload 1.2</a>
+                    <a href="indexdown3.html">Dowload 1.3</a>
+                </div>
+                <div class="imgBox">
+                    <img src="bg1.png" class="bg">
+                </div>
+            </div>
+            <ul class="thumb">
+                <li><img src="monster.png" onclick="imgSlider('bg1.png')"></li>
+                <li><img src="monster3.png" onclick="imgSlider('bg2.png')"></li>
+                <li><img src="monster2.png" onclick="imgSlider('bg3.png')"></li>
+            </ul>
+        </section>
+        <script type="text/javascript">
+            function imgSlider(anything){
+                document.querySelector('.bg').src = anything;
+            }
+        </script>
+    </body>
+</html>
+
+<!--Code of Blue Bear-->

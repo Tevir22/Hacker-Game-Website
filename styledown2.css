@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300,400,500,700&display=swap');
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+}
+:root
+{
+    --black: #456b93;
+    --white: #fff;
+    --red: #9c505d;
+}
+.main
+{
+    position: relative;
+    min-height: 100vh;
+    background: #1c0522;
+    padding: 30px 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.main::before
+{
+    content: 'Download';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 16vw;
+    font-weight: 700;
+    color: #1c0522;
+}
+header
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 100px;
+    z-index: 100;
+}
+header .logo
+{
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+header ul
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+header ul li
+{
+    list-style: none;
+    margin-left: 20px;
+}
+header ul li a
+{
+    text-decoration: none;
+    padding: 6px 15px;
+    color: #fff;
+    border-radius: 20px;
+}
+header ul li a:hover,
+header ul li a.active
+{
+    background: #fff;
+    color: #1c0522;
+}
+.search
+{
+    position: relative;
+    width: 300px;
+    height: 40px;
+}
+.search input
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 2555, 0.5);
+    outline: none;
+    border-radius: 4px;
+    padding: 0 10px 0 10px;
+    backdrop-filter: blur(10px);
+}
+.search input::placeholder
+{
+    color: #fff;
+}
+.content
+{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
+    z-index: 1;
+}
+.content h2
+{
+    font-size: 5em;
+    font-weight: 300;
+    color: #fff;
+    text-align: center;
+}
+.content h2 span
+{
+    font-weight: 700;
+}
+.btn
+{
+    display: inline-block;
+    background: #fff;
+    color: #1c0522;
+    text-decoration: none;
+    padding: 16px 36px;
+    margin-top: 2Opx;
+    border-radius: 50px;
+    font-size: 1.25em;
+    transition: 0.25s;
+}
+.btn:hover
+{
+    letter-spacing: 4px;
+}
+.bike
+{
+    width: 70%;
+    height: auto;
+}
+.footer
+{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 30px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dots
+{
+    display: flex;
+}
+.dots .dot
+{
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.dots .dot.active
+{
+    background: #456b93;
+}
+.slider .slides
+{
+    position: absolute;
+    top: 70%;
+    left: 0;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 100px;
+    transition: 00.25s;
+    opacity: 0;
+    pointer-events: none;
+}
+.slider .slides.active
+{
+    opacity: 1;
+}
+.slider .slides h2
+{
+    color: #fff;
+    font-size: 2em;
+}
+.slider .slides h2:last-child
+{
+    text-align: end;
+
+}
+.slider .slides h2 span
+{
+    color: #4b8f87;
+    font-size: 0.5em;
+    font-weight: 400;
+    font-style: italic;
+}

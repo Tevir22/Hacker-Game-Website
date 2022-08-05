@@ -1,0 +1,378 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+header
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 100px;
+    z-index: 100;
+}
+header .logo
+{
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+header ul
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+header ul li
+{
+    list-style: none;
+    margin-left: 20px;
+}
+header ul li a
+{
+    text-decoration: none;
+    padding: 6px 15px;
+    color: #fff;
+    border-radius: 20px;
+}
+header ul li a:hover,
+header ul li a.active
+{
+    background: #fff;
+    color: #1c0522;
+}
+.search
+{
+    position: relative;
+    width: 300px;
+    height: 40px;
+}
+.search input
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 2555, 0.5);
+    outline: none;
+    border-radius: 4px;
+    padding: 0 10px 0 10px;
+    backdrop-filter: blur(10px);
+}
+.search input::placeholder
+{
+    color: #fff;
+}
+.banner
+{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #1c0522;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.banner img
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+}
+.banner .content
+{
+    position: relative;
+    max-width: 750px;
+    text-align: center;
+}
+.banner .content h2
+{
+    color: #fff;
+    font-size: 4em;
+    line-height: 1.5em;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+.banner .content h2 text
+{
+    font-size: 2em;
+    color: #456b93;
+}
+.banner .content h2 span
+{
+    font-size: 2em;
+    color: #9c505d;
+}
+.banner .content p
+{
+    color: #fff;
+    font-size: 18px;
+}
+.about
+{
+    position: relative;
+    width: 100%;
+    display: flex;
+}
+.about .contentBx
+{
+    background: #456b93;
+    padding: 100px;
+    width: 50%;
+}
+.heading
+{
+    color: #fff;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+.text 
+{
+    color: #fff;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+.about .imgBx
+{
+    background: url(hacker_game4.png);
+    width: 50%;
+    background-size: cover;
+    background-position: center;
+}
+.services
+{
+    background: #1c0522;
+    padding: 100px;
+    text-align: center;
+}
+.services .container
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 60px;
+}
+.services .container .serviceBx
+{
+    position: relative;
+    background: #fff;
+    width: 350px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
+.services .container .serviceBx img
+{
+    max-width: 100px;
+}
+.services .container .serviceBx h2
+{
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+.technology
+{
+    background: #9c505d;
+    width: 100%;
+    padding: 100px;
+    padding-top: 300px;
+    margin-top: -300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.technology .contentBx
+{
+    max-width: 800px;
+}
+.technology .imgBx
+{
+    max-width: 250px;
+
+}
+.technology .imgBx img
+{
+    max-width: 100%;
+}
+.client
+{
+    background: #456b93;
+    padding: 100px;
+    text-align: center;
+}
+.client .imgBx
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+.client .imgBx img
+{
+    max-width: 200px;
+    margin: 20px;
+    opacity: 0.25;
+    cursor: pointer;
+}
+.client .imgBx img:hover
+{
+    opacity: 1;
+}
+.testimonials
+{
+    position: relative;
+    padding: 100px;
+    background: #1c0522;
+    text-align: center;
+}
+.testimonials .container
+{
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-top: 40px;
+     flex-wrap: wrap;
+}
+.testimonials .container .contentBx
+{
+    background: #fff;
+    padding: 60px 50px;
+    width: 550px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    border-radius: 20px;
+}
+.testimonials .container .contentBx p
+{
+    font-style: italic;
+}
+.testimonials .container .contentBx h3
+{
+    width: 100%;
+    text-align: end;
+    font-weight: 500;
+}
+.contact
+{
+    padding: 100px;
+    background: #456b93;
+    text-align: center;
+}
+.imgBx2
+{
+    background: url(hacker_game21.png);
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+}
+.redbg
+{
+    background: url(red.png) !important;
+    background-size: cover;
+    background-position: center;
+}
+.form .inputBx
+{
+    margin-bottom: 40px;
+}
+.form .inputBx input
+{
+    width: 100%;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    padding: 10px 0;
+    font-size: 18px;
+    font-weight: 300;
+    color: #fff;
+    border-bottom: 2px solid #fff;
+}
+.form .inputBx input::placeholder
+{
+    color: #fff;
+}
+.form .inputBx textarea
+{
+    width: 100%;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    padding: 10px 0;
+    font-size: 18px;
+    font-weight: 300;
+    color: #fff;
+    min-height: 150px;
+    border-bottom: 2px solid #fff;
+}
+.form .inputBx textarea::placeholder
+{
+    color: #fff;
+}
+.form .inputBx input[type="submit"]
+{
+    width: 150px;
+    background: #fff;
+    color: #1c0522;
+    cursor: pointer;
+    font-weight: 400p;
+    border-radius: 20px;
+}
+.footer
+{
+    background: #1c0522;
+    padding: 20px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer ul
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.footer ul li
+{
+    list-style: none;
+}
+.footer ul li a
+{
+    text-decoration: none;
+    display: inline-block;
+    margin: 0 10px;
+}
+.footer ul li a img
+{
+    filter: invert(1);
+    max-width: 20px;
+}
