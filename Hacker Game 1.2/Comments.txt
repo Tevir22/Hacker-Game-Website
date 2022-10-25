@@ -1,0 +1,23 @@
+This is the download file of my game.
+
+
+
+What it contains:
+- In the "assets2" file, you will find the graphic resources that have been exported into the game. Be careful to save them in the same place as your scripts, otherwise the game will not work. Don't change their name for the same reason. If you want to make a variant of my game with your own graphics resources it is possible if you change the names and dimensions directly in the code (this is not recommended for beginners but still quite simple)
+
+- In the file "scripts", you will find the 8 scripts which constitute my game in ".py". I specify that the game is not convertible in .exe, it is useless to try.
+
+
+
+To make the game work :
+- Start by downloading the latest version of the Python programming language. Here is a YouTube tutorial to install and configure it on Windows (if you are on MacOs or Linux, I invite you to do your research by yourself):
+https://www.youtube.com/watch?v=3nrCgMTDTdY
+
+- Download a Python IDE, I strongly recommend PyCharm which is specially designed for this programming language.
+
+- Make the necessary imports, export the scrips and assets, launch the execution and enjoy the game !
+
+
+
+Thanks for downloading and have fun,
+BLUE BEAR
